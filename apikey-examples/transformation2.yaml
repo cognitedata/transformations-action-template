@@ -1,0 +1,19 @@
+# version: v3
+externalId: "test-cli-transform-raw"
+name: "test-cli-transform-raw"
+destination: 
+  type: "raw"
+  rawDatabase: "asd2"
+  rawTable: "asd2"
+shared: True
+action: "upsert"
+query:
+  file: tests/example/my_transform.sql
+ignoreNullFields: False
+notifications:
+  - emel.varol@cognite.com
+authentication:
+  read:
+    apiKey: ${API_KEY}
+  write:
+    apiKey: ${API_KEY}

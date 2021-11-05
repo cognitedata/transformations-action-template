@@ -1,0 +1,21 @@
+# version: v3
+externalId: "test-cli-transform-oidc"
+name: "test-cli-transform-oidc"
+destination: 
+  type: "assets"
+shared: True
+action: "upsert"
+query: "select 'asd' as name, 'asd' as externalId"
+ignoreNullFields: False
+notifications:
+  - emel.varol@cognite.com
+authentication:
+  clientId: ${CLIENT_ID}
+  clientSecret: ${CLIENT_SECRET}
+  tokenUrl: ${TOKEN_URL}
+  scopes: 
+    - ${SCOPES}
+  cdfProjectName: ${CDF_PROJECT_NAME}
+  # audience: ""
+
+

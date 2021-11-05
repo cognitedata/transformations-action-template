@@ -1,0 +1,40 @@
+name: Deploy Transformations
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy-tranformations:
+    runs-on: ubuntu-latest
+    name: Transformations
+    steps:
+      - uses: actions/checkout@v2-beta
+      
+      - name: Transformations Deploy step
+        uses: cognitedata/transformations-cli@main
+        id: deploy-tranformations
+        env:
+          API_KEY: ${{secrets.EXAMPLE_API_KEY}}
+        with:
+          path: apikey-examples
+          api-key: ${{secrets.EXAMPLE_API_KEY}}
+          cdf-project-name: jetfiretest # to supress python sdk warning
+      - name: Transformations Deploy step with OIDC
+        uses: cognitedata/transformations-cli@main
+        id: deploy-tranformations-2
+        env:
+          TOKEN_URL: https://login.microsoftonline.com/b86328db-09aa-4f0e-9a03-0136f604d20a/oauth2/v2.0/token
+          SCOPES: https://bluefield.cognitedata.com/.default
+          CDF_PROJECT_NAME: extractor-bluefield-testing
+          CLIENT_ID: ${{secrets.EXTRACTORS_CLIENT_ID}}
+          CLIENT_SECRET: ${{secrets.EXTRACTORS_CLIENT_SECRET}}
+        with:
+          path: oidc_examples
+          client-id: ${{secrets.EXTRACTORS_CLIENT_ID}}
+          client-secret: ${{secrets.EXTRACTORS_CLIENT_SECRET}}
+          cdf-project-name: extractor-bluefield-testing
+          token-url: https://login.microsoftonline.com/b86328db-09aa-4f0e-9a03-0136f604d20a/oauth2/v2.0/token
+          scopes: https://bluefield.cognitedata.com/.default
+          cluster: bluefield
+

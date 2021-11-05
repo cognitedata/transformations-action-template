@@ -1,0 +1,31 @@
+# version: v3
+externalId: "test-cli-transform-oidc-raw"
+name: "test-cli-transform-oidc-raw"
+destination: 
+  type: "raw"
+  rawDatabase: "asd"
+  rawTable: "asd"
+shared: True
+action: "upsert"
+query:
+  file: tests/oidc_examples/subfolder/my_transform.sql
+ignoreNullFields: False
+schedule: "5 4 * * *"
+notifications:
+  - emel.varol@cognite.com
+authentication:
+  read:
+    clientId: ${CLIENT_ID}
+    clientSecret: ${CLIENT_SECRET}
+    tokenUrl: ${TOKEN_URL}
+    scopes: 
+      - ${SCOPES}
+    cdfProjectName: ${CDF_PROJECT_NAME}
+  write:
+    clientId: ${CLIENT_ID}
+    clientSecret: ${CLIENT_SECRET}
+    tokenUrl: ${TOKEN_URL}
+    scopes: 
+      - ${SCOPES}
+    cdfProjectName: ${CDF_PROJECT_NAME}
+
