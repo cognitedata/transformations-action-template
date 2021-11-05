@@ -10,8 +10,6 @@ jobs:
     name: Transformations
     steps:
       - uses: actions/checkout@v2-beta
-
-      - uses: actions/checkout@v2-beta
         with:
           # Private version of https://github.com/actions/hello-world-docker-action
           repository: cognitedata/transformations-cli@main
