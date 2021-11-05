@@ -1,0 +1,16 @@
+---
+name: Validate Pull Request
+on:
+    pull_request:
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Lint YAML files
+              run: yamllint transformations_apikey/ --format=github
+
+            - name: Lint YAML files (OIDC)
+              run: yamllint transformations_oidc/ --format=github
+
