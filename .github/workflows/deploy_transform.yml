@@ -13,7 +13,7 @@ jobs:
         with:
           # Private version of https://github.com/actions/hello-world-docker-action
           repository: cognitedata/transformations-cli@main
-          ref: refs/remotes/origin/main
+          # ref: refs/remotes/origin/main
           token: ${{ secrets.GitHub_PAT }} # `GitHub_PAT` is a secret that contains your PAT to clone that private repo
       
       - name: Transformations Deploy step
