@@ -92,9 +92,9 @@ Similarly for the credentials that are going to be used at runtime (as opposed t
       COGNITE_CLIENT_SECRET: ...
   with:
       path: transformations
-      client-id: my-jetfire-client-id
+      client-id: <my-jetfire-client-id>
       client-secret: ...
-      cdf-project-name: my-project-name
+      cdf-project-name: <my-project-name>
       token-url: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
       scopes: https://<my-cluster>.cognitedata.com/.default # space separated if multiple
 
@@ -106,7 +106,7 @@ authentication:
   tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
   scopes:
       - https://<my-cluster>.cognitedata.com/.default
-  cdfProjectName: my-project-name
+  cdfProjectName: <my-project-name>
   # The following are given as the name of an environment variable:
   clientId: ${COGNITE_CLIENT_ID}
   clientSecret: ${COGNITE_CLIENT_SECRET}
@@ -198,8 +198,8 @@ authentication:
 authentication:
   tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
   scopes:
-      - https://bluefield.cognitedata.com/.default
-  cdfProjectName: my-project
+      - https://<my-cluster>.cognitedata.com/.default
+  cdfProjectName: <my-project-name>
   clientId: ${COGNITE_CLIENT_ID}          # Env var as referenced in deploy step
   clientSecret: ${COGNITE_CLIENT_SECRET}  # Env var as referenced in deploy step
 ```
@@ -210,15 +210,15 @@ authentication:
   read:
     tokenUrl: https://login.microsoftonline.com/<read-azure-tenant-id>/oauth2/v2.0/token
     scopes:
-        - https://bluefield.cognitedata.com/.default
-    cdfProjectName: read-project
+        - https://<my-cluster>.cognitedata.com/.default
+    cdfProjectName: <read-project-name>
     clientId: ${COGNITE_CLIENT_ID}          # Env var as referenced in deploy step
     clientSecret: ${COGNITE_CLIENT_SECRET}  # Env var as referenced in deploy step
   write:
     tokenUrl: https://login.microsoftonline.com/<write-azure-tenant-id>/oauth2/v2.0/token
     scopes:
-        - https://bluefield.cognitedata.com/.default
-    cdfProjectName: write-project
+        - https://<my-cluster>.cognitedata.com/.default
+    cdfProjectName: <write-project-name>
     clientId: ${COGNITE_CLIENT_ID_WRITE}          # Env var as referenced in deploy step
     clientSecret: ${COGNITE_CLIENT_SECRET_READ}   # Env var as referenced in deploy step
 ```

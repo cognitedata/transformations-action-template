@@ -44,7 +44,7 @@ jobs:
                   client-id: <cognite-client-id>
                   client-secret: ${{ secrets[steps.extract_secrets.outputs.transformations_client_secret] }}
                   cdf-project-name: <my-cdf-project>
-                  token-url: https://login.microsoftonline.com/<my-aad>/oauth2/v2.0/token
-                  scopes: https://<cluster>.cognitedata.com/.default
+                  token-url: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
+                  scopes: https://<my-cluster>.cognitedata.com/.default
                   # If you are not using the main cluster (europe-west1-1), specify it here:
                   # cluster: greenfield

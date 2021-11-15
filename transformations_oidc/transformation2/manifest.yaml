@@ -45,14 +45,14 @@ authentication:
   read:
     clientId: ${COGNITE_CLIENT_ID}
     clientSecret: ${COGNITE_CLIENT_SECRET}
-    tokenUrl: https://login.microsoftonline.com/b86328db-09aa-4f0e-9a03-0136f604d20a/oauth2/v2.0/token
+    tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
     scopes:
       - https://westeurope-1.cognitedata.com/.default
-    cdfProjectName: jetfiretest-westeurope1
+    cdfProjectName: <my-project-name>
   write:
     clientId: ${COGNITE_CLIENT_ID}
     clientSecret: ${COGNITE_CLIENT_SECRET}
-    tokenUrl: https://login.microsoftonline.com/b86328db-09aa-4f0e-9a03-0136f604d20a/oauth2/v2.0/token
+    tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
     scopes:
-      - https://westeurope-1.cognitedata.com/.default
-    cdfProjectName: jetfiretest-westeurope1
+      - https://<my-cluster>.cognitedata.com/.default
+    cdfProjectName: <my-project-name>

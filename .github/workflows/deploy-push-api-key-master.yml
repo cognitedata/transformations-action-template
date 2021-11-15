@@ -47,4 +47,4 @@ jobs:
                   api-key: ${{ secrets[steps.extract_secrets.outputs.transformations_api_key] }}
                   # If you are not using the main cluster (europe-west1-1), specify it here:
                   # cluster: greenfield
-                  # cdf-project-name: my-project # Not required for api keys, used to suppress sdk warnings
+                  # cdf-project-name: <my-project-name> # Not required for api keys, used to suppress sdk warnings
