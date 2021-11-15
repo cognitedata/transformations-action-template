@@ -1,6 +1,6 @@
 ---
 #######################################
-# AUTHENTICATION OPTION 2:            #
+# AUTHENTICATION OPTION 1:            #
 #                          Using OIDC #
 #######################################
 name: Deploy transformations using OIDC auth-flow

@@ -1,8 +1,9 @@
 ---
-##########################################
-# AUTHENTICATION OPTION 1:               #
-#                          Using API-KEY #
-##########################################
+####################################################################
+# AUTHENTICATION OPTION 2:                                         #
+#              Keep in mind that API-KEYs will be deprecated soon  #
+#                                                   Using API-KEY  #
+####################################################################
 name: Deploy transformations using API-key auth-flow
 
 on:
