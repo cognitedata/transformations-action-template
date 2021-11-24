@@ -146,15 +146,13 @@ You need the following for your *read/write API-keys*:
 
 ###### OIDC Capabilities
 You need the following for your *deployment credentials*:
-1. Capability: `project:list`
+1. Capability: `project:list`, `group:list`
 2. Transformations spesific capabilities, one of the following is required:
   - Capability: `transformations:read` and `transformations:write`
   - Use `transformations` or `jetfire` group:
-    * *Be part of a group* named `transformations` or `jetfire`...
-    * Capability: `groups:list` (to verify that you are a member of said group)
 
 You need the following for your *read/write credentials*:
-1. Capability: `project:list`
+1. Capability: `project:list`, `group:list`
 2. Required capability to read from source resource type and write to target resource type
 
 ### Manifest
