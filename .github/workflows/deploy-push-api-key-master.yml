@@ -1,0 +1,51 @@
+---
+####################################################################
+# AUTHENTICATION OPTION 2:                                         #
+#              Keep in mind that API-KEYs will be deprecated soon  #
+#                                                   Using API-KEY  #
+####################################################################
+name: Deploy transformations using API-key auth-flow
+
+on:
+    push:
+        branches: [ main ]
+
+jobs:
+    deploy:
+        name: Deploy transformations
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Extract branch name
+              shell: bash
+              # If branch name has hyphens, replace with underscores
+              run: echo "##[set-output name=name;]$(echo ${GITHUB_REF#refs/heads/} | sed -e s/-/_/g)"
+              id: extract_name
+
+            - name: Echo branch name
+              shell: bash
+              run: echo ${{ steps.extract_name.outputs.name }}
+
+            - name: Resolve secrets
+              shell: bash
+              env:
+                  BRANCH: ${{ steps.extract_name.outputs.name }}
+              run: |
+                  echo "##[set-output name=transformations_api_key;]$(echo transformations_api_key_${BRANCH})"
+                  echo "##[set-output name=cognite_api_key;]$(echo cognite_api_key_${BRANCH})"
+              id: extract_secrets
+
+            - name: Deploy transformations
+              uses: cognitedata/transformations-cli@main
+                  if: false  # Remove this line or this wont run! ;)
+              env:
+                  # List all needed keys or environment variables referenced by
+                  # your manifests to be used by transformations at runtime:
+                  COGNITE_API_KEY: ${{ secrets[steps.extract_secrets.outputs.cognite_api_key] }}
+              with:
+                  path: transformations_apikey
+                  api-key: ${{ secrets[steps.extract_secrets.outputs.transformations_api_key] }}
+                  # If you are not using the main cluster (europe-west1-1), specify it here:
+                  # cluster: greenfield
+                  # cdf-project-name: <my-project-name> # Not required for api keys, used to suppress sdk warnings

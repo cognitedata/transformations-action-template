@@ -1,0 +1,58 @@
+---
+externalId: "test-cli-transform-oidc" # Required
+name: "test-cli-transform-oidc" # Required
+
+shared: true # Optional, default: true
+
+ignoreNullFields: False # Optional, default: true
+
+# query:
+#  # The path to a file containing the SQL query for this transformation.
+#   file: transformation1.sql
+
+# It is also possible to keep the SQL query here
+query: "select 'example-cli-asset' as name, 'example-cli-asset' as externalId"
+
+# If null, the transformation will not be scheduled.
+# schedule: 1 * * * *    # Optional, default: null
+
+# Valid destination values are:  assets, events, timeseries, datapoints, sequences, labels, relationships,
+# files, data_sets.
+# destination:
+#   type: raw
+#   rawDatabase: some_database
+#   rawTable: some_table
+
+# When writing to other destination types, use the following syntax:
+# Valid values are: assets, assethierarchy, events, timeseries, datapoints, stringdatapoints
+destination:
+  type: assets # Required
+
+# Valid values are:
+#   upsert: Create new items, or update existing items if their id or externalId already exists.
+#   create: Create new items. The transformation will fail if there are id or externalId conflicts.
+#   update: Update existing items. The transformation will fail if an id or externalId does not exist.
+#   delete: Delete items by internal id.
+action: upsert # Optional, default: upsert
+
+# List of email adresses to send emails to on transformation errors
+notifications: # Optional, default: null
+  - example1@cognite.com
+  - example2@cognite.com
+
+authentication:
+  # ${VALUE} represents a environment value referenced in deploy step in GitHub workflow
+  read:
+    clientId: ${COGNITE_CLIENT_ID}
+    clientSecret: ${COGNITE_CLIENT_SECRET}
+    tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
+    scopes:
+      - https://westeurope-1.cognitedata.com/.default
+    cdfProjectName: <my-project-name>
+  write:
+    clientId: ${COGNITE_CLIENT_ID}
+    clientSecret: ${COGNITE_CLIENT_SECRET}
+    tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
+    scopes:
+      - https://<my-cluster>.cognitedata.com/.default
+    cdfProjectName: <my-project-name>

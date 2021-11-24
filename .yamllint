@@ -1,0 +1,9 @@
+---
+extends: default
+
+rules:
+    truthy: disable
+    comments-indentation: disable # don't bother me with this rule
+    line-length: # don't fail if longer
+        max: 150
+        level: warning
