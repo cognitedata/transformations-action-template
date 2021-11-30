@@ -129,13 +129,11 @@ JETFIRE_CLIENT_SECRET_${BRANCH} -> JETFIRE_CLIENT_SECRET_PROD
 COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_PROD
 ```
 
-If your customer wants the possibility to rotate these keys regularly, one solution is to instead get a read-key to the secret storage service used by the customer. This is outside the scope of this recipe / template repository, since it would be very cloud-specific. You can ask Murad for advice on how he set this up for NOC!
-
 ##### Capabilities
 
 ###### API-key Capabilities
 You need the following for your *deployment API-key*:
-1. Transformations spesific capabilities, one of the following is required:
+1. Transformations specific capabilities, one of the following is required:
   - Capability: `transformations:read` and `transformations:write`
   - Use `transformations` or `jetfire` group:
     * *Be part of a group* named `transformations` or `jetfire`...
@@ -147,7 +145,7 @@ You need the following for your *read/write API-keys*:
 ###### OIDC Capabilities
 You need the following for your *deployment credentials*:
 1. Capability: `project:list`, `group:list`
-2. Transformations spesific capabilities, one of the following is required:
+2. Transformations specific capabilities, one of the following is required:
   - Capability: `transformations:read` and `transformations:write`
   - Use `transformations` or `jetfire` group:
 
