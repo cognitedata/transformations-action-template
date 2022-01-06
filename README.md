@@ -63,18 +63,18 @@ You should choose one of these, although a combination is possible, either throu
 ##### We encourage the use of OpenID Connect (OIDC)!
 
 #### 1. API-key flow
-In order to connect to CDF, we need the API-key for the `transformations-cli` to be able to deploy the transformations (this is separate from the key used at runtime). In this template, it will be read automatically by the workflow, by reading it from your GitHub secrets. Thus, _surprise surprise_, you need to store the API-key in GitHub secrets in your own repo. However, there is one catch! To distinguish between the API-key meant for e.g. testing and production environments, we control this by appending the branch name responsible for deployment to the end of the secret name as follows: `JETFIRE_API_KEY_{BRANCH}`.
+In order to connect to CDF, we need the API-key for the `transformations-cli` to be able to deploy the transformations (this is separate from the key used at runtime). In this template, it will be read automatically by the workflow, by reading it from your GitHub secrets. Thus, _surprise surprise_, you need to store the API-key in GitHub secrets in your own repo. However, there is one catch! To distinguish between the API-key meant for e.g. testing and production environments, we control this by appending the branch name responsible for deployment to the end of the secret name as follows: `TRANSFORMATIONS_API_KEY_{BRANCH}`.
 
 Let's check out an example. On merges to 'master', you want to deploy to `customer-dev`, so you use the API-key for this project and store it as a GitHub secret with the name:
 
 ```yaml
 # Assuming you have one 'master' branch you use for deployments,
 # the secrets you need to store are:
-JETFIRE_API_KEY_${BRANCH} -> JETFIRE_API_KEY_MASTER
+TRANSFORMATIONS_API_KEY_${BRANCH} -> TRANSFORMATIONS_API_KEY_MASTER
 COGNITE_API_KEY_${BRANCH} -> COGNITE_API_KEY_MASTER
 ```
 
-Similarly, if you have a `customer-prod` project, and you have created a workflow that only runs on your branch named `prod`, you would need to store the API-key to this project under the GitHub secret: `JETFIRE_API_KEY_PROD` (and similarly for the runtime key). You can of course repeat this for as many projects as you want!
+Similarly, if you have a `customer-prod` project, and you have created a workflow that only runs on your branch named `prod`, you would need to store the API-key to this project under the GitHub secret: `TRANSFORMATIONS_API_KEY_PROD` (and similarly for the runtime key). You can of course repeat this for as many projects as you want!
 
 #### 2. OIDC flow
 In essence, the OIDC flow is very similar, except we use a pre-shared *client secret* instead of an API-key. However, this approach needs a few other bits of information to work: The client ID, token URL, and scopes. In the workflow file, you must change these in accordance with your customer's setup.
@@ -86,13 +86,13 @@ Similarly for the credentials that are going to be used at runtime (as opposed t
 # From the workflow file: #
 ###########################
 - name: Deploy transformations
-  uses: cognitedata/jetfire-cli@v2
+  uses: cognitedata/transformations-cli@main
   env:
       COGNITE_CLIENT_ID: my-cognite-client-id
       COGNITE_CLIENT_SECRET: ...
   with:
       path: transformations
-      client-id: <my-jetfire-client-id>
+      client-id: <my-transformations-client-id>
       client-secret: ...
       cdf-project-name: <my-project-name>
       token-url: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
@@ -120,12 +120,12 @@ By default, we expect you to store the client secrets as secrets in your Github 
 ```yaml
 # Assuming you have one 'master' branch you use for deployments,
 # the secrets you need to store are:
-JETFIRE_CLIENT_SECRET_${BRANCH} -> JETFIRE_CLIENT_SECRET_MASTER
+TRANSFORMATIONS_CLIENT_SECRET_${BRANCH} -> TRANSFORMATIONS_CLIENT_SECRET_MASTER
 COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_MASTER
 
 # If you need separation of e.g. dev/test/prod, you can then use
 # another branch named 'prod' (or test or dev...):
-JETFIRE_CLIENT_SECRET_${BRANCH} -> JETFIRE_CLIENT_SECRET_PROD
+TRANSFORMATIONS_CLIENT_SECRET_${BRANCH} -> TRANSFORMATIONS_CLIENT_SECRET_PROD
 COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_PROD
 ```
 
@@ -144,10 +144,9 @@ You need the following for your *read/write API-keys*:
 
 ###### OIDC Capabilities
 You need the following for your *deployment credentials*:
-1. Capability: `project:list`, `group:list`
-2. Transformations specific capabilities, one of the following is required:
+1. Transformations specific capabilities, one of the following is required:
   - Capability: `transformations:read` and `transformations:write`
-  - Use `transformations` or `jetfire` group:
+  - Use `transformations` or `jetfire` group. Also add `project:list` and `group:list` capabilities.
 
 You need the following for your *read/write credentials*:
 1. Capability: `project:list`, `group:list`
