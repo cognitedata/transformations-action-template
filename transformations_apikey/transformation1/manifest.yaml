@@ -24,7 +24,7 @@ query: "select 'example-cli-asset' as name, 'example-cli-asset' as externalId"
 #   rawTable: some_table
 
 # When writing to other destination types, use the following syntax:
-# Valid values are: assets, assethierarchy, events, timeseries, datapoints, stringdatapoints
+# Valid values are: assets, assethierarchy, events, timeseries, datapoints, string_datapoints
 destination:
   type: assets # Required
 
