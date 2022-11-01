@@ -6,7 +6,7 @@
 name: Deploy transformations using OIDC auth-flow
 
 on:
-    pull_request:
+    push:
         branches: [ main ]
 
 jobs:
