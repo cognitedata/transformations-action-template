@@ -32,7 +32,7 @@ destination:
 #   create: Create new items. The transformation will fail if there are id or externalId conflicts.
 #   update: Update existing items. The transformation will fail if an id or externalId does not exist.
 #   delete: Delete items by internal id.
-action: update # Optional, default: upsert
+action: upsert # Optional, default: upsert
 
 # List of email adresses to send emails to on transformation errors
 notifications: # Optional, default: null
