@@ -1,6 +1,6 @@
 ---
-externalId: "test-cli-transform-oidc-raw" # Required
-name: "test-cli-transform-oidc-raw" # Required
+externalId: "test-cli-transform-raw" # Required
+name: "test-cli-transform-raw" # Required
 
 shared: true # Optional, default: true
 

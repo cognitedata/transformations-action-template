@@ -4,7 +4,7 @@
 Transformations in CDF are used to process data from RAW to other CDF resource types ("clean"), for example Assets or Time Series.
 
 ### How
-This template uses Github Workflows to run the `transformations-cli` to deploy transformations to CDF on merges to `master`. If you want to use it with multiple CDF projects, e.g. `customer-dev` and `customer-prod`, you can clone the `deploy-push-master.yml` file and modify it for merges to a specific branch of your choice.
+This template uses Github Workflows to run the `transformations-cli` to deploy transformations to CDF on merges to `main`. If you want to use it with multiple CDF projects, e.g. `customer-dev` and `customer-prod`, you can clone the `deploy-push-main.yml` file and modify it for merges to a specific branch of your choice.
 
 ## Repository Layout
 In the top-level folder `transformations` you may add each transformation job as a new directory, for example:
@@ -50,36 +50,6 @@ However, you can pretty much change this layout however you see fit - as long as
 
 ## Requirements
 ### Authentication
-There are two differnt authentication flows:
-1. Using API-keys (old)
-2. Using OIDC (new)
-
-Thus, this repository contains two similar (but different) workflow-files, one for each flow:
-1. API-key flow: `.github/workflows/deploy-push-api-key-master.yml`
-2. OIDC flow: `.github/workflows/deploy-push-oidc-master.yml`
-
-You should choose one of these, although a combination is possible, either through having different auth flow for different branches (please don't) or using an API-key for transformations (at runtime), but using OIDC flow for the deployment of transformations (or the other way around - also, please don't).
-
-##### We encourage the use of OpenID Connect (OIDC)!
-
-#### 1. API-key flow
-In order to connect to CDF, we need the API-key for the `transformations-cli` to be able to deploy the transformations (this is separate from the key used at runtime). In this template, it will be read automatically by the workflow, by reading it from your GitHub secrets. Thus, _surprise surprise_, you need to store the API-key in GitHub secrets in your own repo. However, there is one catch! To distinguish between the API-key meant for e.g. testing and production environments, we control this by appending the branch name responsible for deployment to the end of the secret name as follows: `TRANSFORMATIONS_API_KEY_{BRANCH}`.
-
-Let's check out an example. On merges to 'master', you want to deploy to `customer-dev`, so you use the API-key for this project and store it as a GitHub secret with the name:
-
-```yaml
-# Assuming you have one 'master' branch you use for deployments,
-# the secrets you need to store are:
-TRANSFORMATIONS_API_KEY_${BRANCH} -> TRANSFORMATIONS_API_KEY_MASTER
-COGNITE_API_KEY_${BRANCH} -> COGNITE_API_KEY_MASTER
-```
-
-Similarly, if you have a `customer-prod` project, and you have created a workflow that only runs on your branch named `prod`, you would need to store the API-key to this project under the GitHub secret: `TRANSFORMATIONS_API_KEY_PROD` (and similarly for the runtime key). You can of course repeat this for as many projects as you want!
-
-#### 2. OIDC flow
-In essence, the OIDC flow is very similar, except we use a pre-shared *client secret* instead of an API-key. However, this approach needs a few other bits of information to work: The client ID, token URL, and scopes. In the workflow file, you must change these in accordance with your customer's setup.
-
-Similarly for the credentials that are going to be used at runtime (as opposed to _deployment of transformations to CDF_), except these are specified in each manifest-file, pointing to specific environment variables. You must/should specify these environment variables in the workflow file. Let's check out a full example:
 
 ```yaml
 ###########################
@@ -114,14 +84,13 @@ authentication:
 
 The one thing to take away from this example is that the manifest variables, like `clientId`, points to the corresponding environment variables specified below `env` in the workflow file. Feel free to name these whatever you want.
 
-##### 2. OIDC flow: client secrets
 By default, we expect you to store the client secrets as secrets in your Github repository. This way we can automatically read them in the workflows, *sweeeeet*. The expected setup is as follows:
 
 ```yaml
-# Assuming you have one 'master' branch you use for deployments,
+# Assuming you have one 'main' branch you use for deployments,
 # the secrets you need to store are:
-TRANSFORMATIONS_CLIENT_SECRET_${BRANCH} -> TRANSFORMATIONS_CLIENT_SECRET_MASTER
-COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_MASTER
+TRANSFORMATIONS_CLIENT_SECRET_${BRANCH} -> TRANSFORMATIONS_CLIENT_SECRET_MAIN
+COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_MAIN
 
 # If you need separation of e.g. dev/test/prod, you can then use
 # another branch named 'prod' (or test or dev...):
@@ -131,18 +100,6 @@ COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_PROD
 
 ##### Capabilities
 
-###### API-key Capabilities
-You need the following for your *deployment API-key*:
-1. Transformations specific capabilities, one of the following is required:
-  - Capability: `transformations:read` and `transformations:write`
-  - Use `transformations` or `jetfire` group:
-    * *Be part of a group* named `transformations` or `jetfire`...
-    * Capability: `groups:list` (to verify that you are a member of said group)
-
-You need the following for your *read/write API-keys*:
-1. Required capability to read from source resource type and write to target resource type
-
-###### OIDC Capabilities
 You need the following for your *deployment credentials*:
 1. Transformations specific capabilities, one of the following is required:
   - Capability: `transformations:read` and `transformations:write`
@@ -173,22 +130,7 @@ destination:
 #### Required _field_ for auth
 __`authentication` must be provided.__
 
-1. To use API-keys, the API-key to be used in the transformation must be provided with the following syntax:
-```yaml
-authentication:
-  apiKey: ${API_KEY} # Env var as referenced in deploy step
-```
-
-If you want to use separate API-keys for read/write, the following syntax is needed:
-```yaml
-authentication:
-  read:
-    apiKey: ${READ_API_KEY} # Env var as referenced in deploy step
-  write:
-    apiKey: ${WRITE_API_KEY} # Env var as referenced in deploy step
-```
-
-2. To use OIDC auth flow for read/write, the client credentials to be used in the transformation must be provided with the following syntax:
+The client credentials to be used in the transformation must be provided with the following syntax:
 ```yaml
 authentication:
   tokenUrl: https://login.microsoftonline.com/<my-azure-tenant-id>/oauth2/v2.0/token
@@ -199,7 +141,7 @@ authentication:
   clientSecret: ${COGNITE_CLIENT_SECRET}  # Env var as referenced in deploy step
 ```
 
-If you want to use separate OIDC credentials for read/write, the following syntax is needed:
+If you want to use separate credentials for read/write, the following syntax is needed:
 ```yaml
 authentication:
   read:
