@@ -103,7 +103,6 @@ COGNITE_CLIENT_SECRET_${BRANCH} -> COGNITE_CLIENT_SECRET_PROD
 You need the following for your *deployment credentials*:
 1. Transformations specific capabilities, one of the following is required:
   - Capability: `transformations:read` and `transformations:write`
-  - Use `transformations` or `jetfire` group. Also add `project:list` and `group:list` capabilities.
 
 You need the following for your *read/write credentials*:
 1. Capability: `project:list`, `group:list`
