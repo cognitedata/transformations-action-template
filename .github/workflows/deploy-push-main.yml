@@ -1,9 +1,4 @@
----
-#######################################
-# AUTHENTICATION OPTION 1:            #
-#                          Using OIDC #
-#######################################
-name: Deploy transformations using OIDC auth-flow
+name: Deploy transformations
 
 on:
     push:
@@ -40,7 +35,7 @@ jobs:
                   COGNITE_CLIENT_ID: <cognite-client-id>
                   COGNITE_CLIENT_SECRET: ${{ secrets[steps.extract_secrets.outputs.cognite_client_secret] }}
               with:
-                  path: transformations_oidc
+                  path: transformations
                   client-id: <cognite-client-id>
                   client-secret: ${{ secrets[steps.extract_secrets.outputs.transformations_client_secret] }}
                   cdf-project-name: <my-cdf-project>
@@ -48,3 +43,6 @@ jobs:
                   scopes: https://<my-cluster>.cognitedata.com/.default
                   # If you are not using the main cluster (europe-west1-1), specify it here:
                   # cluster: greenfield
+                  # Audience (for non AAD idps)
+                  #audience: <audience>
+

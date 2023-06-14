@@ -1,1 +1,0 @@
-select 'asd' as key, 'asd' as externalId
