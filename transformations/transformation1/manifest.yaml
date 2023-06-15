@@ -17,15 +17,35 @@ query:
 schedule: 1 * * * * # Optional, default: null
 
 # Valid destination values are:  assets, events, timeseries, datapoints, sequences, labels, relationships,
-# files, data_sets.
+# files, data_sets, instances
 destination:
   type: raw
   rawDatabase: some_database
   rawTable: some_table
 
-# When writing to other destination types, use the following syntax:
-# Valid values are: assets, assethierarchy, events, timeseries, datapoints, stringdatapoints
-# destination: assets # Required
+# when writing instances to a type, use the following syntax:
+# NOTE: instanceSpace is optional. If not set, it is a mandatory property(column) in the data
+# destination:
+#   type: instances
+#   instanceSpace: InstanceSpace
+#   dataModel:
+#     space: modelSpace
+#     externalId: modelExternalId
+#     version: modelVersion
+#     destination_type: viewExternalId
+
+# when writing instances to a relationship, use the following syntax:
+# NOTE: instanceSpace is optional. If not set, it is a mandatory property(column) in the data
+# destination:
+#   type: instances
+#   instanceSpace: InstanceSpace
+#   dataModel:
+#     space: modelSpace
+#     externalId: modelExternalId
+#     version: modelVersion
+#     destination_type: viewExternalId
+#     destination_relationship_from_type: connectionPropertyName  
+
 
 # Valid values are:
 #   upsert: Create new items, or update existing items if their id or externalId already exists.
