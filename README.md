@@ -115,7 +115,7 @@ The manifest file is a `yaml`-file that describes the transformation, like name,
 - externalId
 - name
 - query        # Relative path to the file containing the SQL query
-- destination  # One of: assets, assethierarchy, events, timeseries, datapoints, stringdatapoints
+- destination  # One of: assets, asset_hierarchy, events, timeseries, datapoints, stringdatapoints
 ```
 #### Note on writing to `raw`
 When writing to RAW tables, you also need to specify `type`, `rawDatabase` and `rawTable` like this in the yaml-file:
