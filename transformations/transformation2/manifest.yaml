@@ -1,10 +1,10 @@
 ---
-externalId: "test-cli-transform-oidc" # Required
-name: "test-cli-transform-oidc" # Required
+externalId: "test-cli-transform-oidc"  # Required
+name: "test-cli-transform-oidc"  # Required
 
-shared: true # Optional, default: true
+shared: true  # Optional, default: true
 
-ignoreNullFields: False # Optional, default: true
+ignoreNullFields: False  # Optional, default: true
 
 # query:
 #  # The path to a file containing the SQL query for this transformation.
@@ -24,24 +24,24 @@ query: "select 'example-cli-asset' as name, 'example-cli-asset' as externalId"
 #   rawTable: some_table
 
 # When writing to other destination types, use the following syntax:
-# Valid values are: assets, assethierarchy, events, timeseries, datapoints, stringdatapoints
+# Valid values are: assets, asset_hierarchy, events, timeseries, datapoints, stringdatapoints
 destination:
-  type: assets # Required
+  type: assets  # Required
 
 # Valid values are:
 #   upsert: Create new items, or update existing items if their id or externalId already exists.
 #   create: Create new items. The transformation will fail if there are id or externalId conflicts.
 #   update: Update existing items. The transformation will fail if an id or externalId does not exist.
 #   delete: Delete items by internal id.
-action: upsert # Optional, default: upsert
+action: upsert  # Optional, default: upsert
 
-# List of email adresses to send emails to on transformation errors
-notifications: # Optional, default: null
+# List of email addresses to send emails to on transformation errors
+notifications:  # Optional, default: null
   - example1@cognite.com
   - example2@cognite.com
 
 authentication:
-  # ${VALUE} represents a environment value referenced in deploy step in GitHub workflow
+  # ${VALUE} represents an environment value referenced in deploy step in GitHub workflow
   read:
     clientId: ${COGNITE_CLIENT_ID}
     clientSecret: ${COGNITE_CLIENT_SECRET}
