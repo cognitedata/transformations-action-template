@@ -1,3 +1,8 @@
+# --- Deprecation and replacement ---
+
+The transformations CLI github action has been replaced by [CDF Toolkit](https://docs.cognite.com/cdf/deploy/cdf_toolkit).
+This repository has been archived and will no longer be maintained or updated.
+
 # Transformations CI/CD Template
 
 ### Why
